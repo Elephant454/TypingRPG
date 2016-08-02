@@ -29,20 +29,30 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
 
     RandomPalette randomPalette = new RandomPalette(0.5f, 0.6f);
 
-    ArrayList<String> words = new ArrayList<>();
+    int fontSize = 12;
+
+    ArrayList<Word> words = new ArrayList<>();
     int currentWordIndex = 0;
 
-    public GraphicsPanel () {
-        words.add("boop");
-        words.add("kek");
+    ArrayList<Character> characterBuffer = new ArrayList<>();
 
-        //setBackground(Color.GRAY);
+    public GraphicsPanel () {
         this.setSize(800, 600);
+
+        int usableHeight = this.getHeight() - words.size()*fontSize;
+        int usableWidth = this.getWidth()/2;
+        createRandomWord(usableHeight, usableWidth, "boop");
+        createRandomWord(usableHeight, usableWidth, "kek");
 
         setFocusable(true);
         addKeyListener(this);
         this.requestFocusInWindow(true);
         (new Thread(this)).start();
+    }
+
+    public void createRandomWord(int usableHeight, int usableWidth, String text) {
+        words.add(new Word((int) (Math.random()*this.getWidth()/2) + usableWidth, (int) Math.random()*usableHeight + fontSize, text));
+        
     }
 
     @Override
@@ -56,16 +66,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
 
         g2.clearRect(0, 0, getWidth(), getHeight());
 
-        g2.setFont(new Font("Inconsolata", Font.PLAIN, 12));
-        int usableHeight = this.getHeight() - words.size()*g2.getFont().getSize();
-        for(int i=0; i<words.size(); i++) {
-            g2.drawString(words.get(i), 20, (usableHeight/words.size()*i) + g2.getFont().getSize());
-        }
+        g2.setFont(new Font("Inconsolata", Font.PLAIN, fontSize));
 
+        for(Word word : words) {
+            g2.drawString(word.getText(), word.getX(), word.getY());
+        }
     }
 
     public void run() {
-        handleInput();
+        gameLogic();
         while(running) {
             currentTime = System.nanoTime()/1000000000;
             deltaTime = currentTime-oldTime;
@@ -75,20 +84,34 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-    public void handleInput() {
+    public void gameLogic() {
+        for(int i=0; i<words.size(); i++) {
+            if(words.get(i).getText().length() < 1) words.remove(i);
+        }
         
     }
 
     public void keyTyped(KeyEvent e){
-        for(int i=0; i<words.size(); i++) {
-            if(words.get(i).length() > 0) {
-                if(e.getKeyChar() == words.get(i).charAt(0)) {
-                    words.set(i, words.get(i).substring(1));
+        if(words.size() > 0) {
+            for(int i=0; i<words.size(); i++) {
+                System.out.println(words.get(i).getText().length());
+                if(words.get(i).getText().length() == 0) {
+                    words.remove(i);
+                    System.out.println("This happened!");
                 }
-            } else {
-                words.remove(i);
+                if(e.getKeyChar() == words.get(i).getText().charAt(0)) {
+                    words.get(i).setText(words.get(i).getText().substring(1));
+                }
             }
+        }else {
+            System.out.println("Level complete!");
         }
+
+        //System.out.print("Size: " + words.size() + " Contents: ");
+        //for(Word word : words) {
+        //System.out.print(word.getText() + ", ");
+        //}
+        System.out.println("");
     }
     public void keyPressed(KeyEvent e){}
     public void keyReleased(KeyEvent e){}
