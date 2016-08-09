@@ -82,25 +82,23 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void gameLogic() {
-        for(int i=0; i<words.size(); i++) {
-            if(words.get(i).getText().length() < 1) words.remove(i);
-        }
-
+        System.out.println(charqueue);
         if(words.size() > 0 && !charqueue.isEmpty()) {
             for(int i=0; i<words.size(); i++) {
-                //System.out.println(words.get(i).getText().length());
+                if(words.get(i).getText().length() < 1) words.remove(i);
                 if(charqueue.getLast() == words.get(i).getText().charAt(0)) {
                     words.get(i).setText(words.get(i).getText().substring(1));
                     charqueue.removeLast();
                 }
             }
-        }else {
-            //System.out.println("Level complete!");
+        //}else {
+        //System.out.println("Level complete!");
         }
     }
 
     public void keyTyped(KeyEvent e){
         charqueue.addFirst(e.getKeyChar());
+        System.out.println(charqueue);
         //System.out.println(!charqueue.isEmpty());
 
         //System.out.print("Size: " + words.size() + " Contents: ");
