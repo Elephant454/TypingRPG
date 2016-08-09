@@ -1,9 +1,16 @@
 package com.gmail.elephant454.typingrpg;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Word {
     private int x;
     private int y;
     private String text;
+
+    private int progress = 0;
+    private ArrayList<List<Word>> parentLists = new ArrayList<>();
 
     public Word() {
         setX(100);
@@ -34,17 +41,37 @@ public class Word {
         this.text = text;
     }
     public String getText() {
-        return text;
+        return text.substring(progress);
     }
 
     public char getNextChar() {
-        return text.charAt(0);
+        if(isDefeated()) return 0;
+        else return text.charAt(progress);
     }
     public void removeChar() {
         text = text.substring(1);
     }
 
-    public boolean isEmpty() {
-        return text.length() < 1;
+    public int getProgress() {
+        return progress;
+    }
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+    public void incrementProgress() {
+        progress++;
+    }
+    public boolean isDefeated() {
+        return progress >= text.length();
+    }
+
+    public void addToList(List<Word> list) {
+        parentLists.add(list);
+        list.add(this);
+    }
+    public void destroy() {
+        for(List<Word> list : parentLists) {
+            list.remove(list.indexOf(this));
+        }
     }
 }

@@ -14,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.awt.geom.Line2D;
 import java.awt.geom.Line2D.Double;
 import java.awt.geom.Rectangle2D;
@@ -33,9 +34,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     int fontSize = 12;
 
     ArrayList<Word> words = new ArrayList<>();
-    int currentWordIndex = 0;
 
-    ArrayDeque<Character> charqueue = new ArrayDeque<>();
+    Player player = new Player();
+
 
     public GraphicsPanel () {
         this.setSize(800, 600);
@@ -53,7 +54,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void createRandomWord(int usableHeight, int usableWidth, String text) {
-        words.add(new Word((int) (Math.random()*this.getWidth()/2) + usableWidth, (int) Math.random()*usableHeight + fontSize, text));
+        new Word((int) (Math.random()*this.getWidth()/2) + usableWidth, (int) Math.random()*usableHeight + fontSize, text).addToList(words);
     }
 
     @Override
@@ -82,37 +83,40 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void gameLogic() {
-        if(words.size() > 0 && !charqueue.isEmpty()) {
-            for(int i=0; i<words.size(); i++) {
-                if(currentWordIndex == -1 && charqueue.getLast() == words.get(i).getNextChar()) {
-                    currentWordIndex = i;
-                    words.get(i).removeChar();
-                    charqueue.removeLast();
-                }
+        Iterator<Character> charIterator = player.getCharQueue().descendingIterator();
+        Character character = 0;
+        if(charIterator.hasNext()) character = charIterator.next();
+        else character = 0;
+        Iterator<Word> wordsIterator = words.iterator();
+        while(wordsIterator.hasNext()) {
+            Word word = wordsIterator.next();
+            if(word.isDefeated()) {
+                word.destroy();
+                player.setCurrentWord(null);
             }
-            if(words.get(currentWordIndex).isEmpty()) {
-                words.remove(currentWordIndex);
-                currentWordIndex = -1;
+
+            if(player.getCurrentWord() == null && character == word.getNextChar()) {
+                if(charIterator.hasNext()) character = charIterator.next();
+                player.setCurrentWord(word);
+                word.incrementProgress();
             }
-            if(words.get(currentWordIndex).getNextChar() == charqueue.getLast()) {
-                words.get(currentWordIndex).removeChar();
-                charqueue.removeLast();
+        }
+
+        while(charIterator.hasNext()) {
+            if(player.getCurrentWord().getNextChar() == character) {
+                player.getCurrentWord().incrementProgress();
+                character = charIterator.next();
             }else {
-                doWrongCharPenalty();
+                // add some sort of penalty for getting it wrong
+                //character = charIterator.next();
             }
-        //}else {
-        //System.out.println("Level complete!");
         }
     }
 
-    public void doWrongCharPenalty() {
-        charqueue.removeLast();
-    }
-
     public void keyTyped(KeyEvent e){
-        charqueue.addFirst(e.getKeyChar());
-        System.out.println(charqueue);
-        //System.out.println(!charqueue.isEmpty());
+        player.getCharQueue().addFirst(e.getKeyChar());
+        System.out.println(player.getCharQueue());
+        //System.out.println(!charQueue.isEmpty());
 
         //System.out.print("Size: " + words.size() + " Contents: ");
         //for(Word word : words) {
