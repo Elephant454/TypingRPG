@@ -36,4 +36,11 @@ public class Word {
     public String getText() {
         return text;
     }
+
+    public char getNextChar() {
+        return text.charAt(0);
+    }
+    public void removeChar() {
+        text = text.substring(1);
+    }
 }
