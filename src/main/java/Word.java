@@ -43,4 +43,8 @@ public class Word {
     public void removeChar() {
         text = text.substring(1);
     }
+
+    public boolean isEmpty() {
+        return text.length() < 1;
+    }
 }
