@@ -47,8 +47,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
         createRandomWord(usableHeight, usableWidth, "kek");
         createRandomWord(usableHeight, usableWidth, "idunno");
 
-        player.getCharQueue().addFirst('b');
-
         setFocusable(true);
         addKeyListener(this);
         this.requestFocusInWindow(true);
@@ -87,7 +85,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void gameLogic() {
-        //Iterator<Character> charIterator = player.getCharQueue().descendingIterator();
         Character currentPlayerCharacter = player.getCharQueue().pollLast();
         Character currentWordCharacter = player.getCurrentWord().getNextChar();
         Iterator<Word> wordsIterator = firstWords.getWords().iterator();
@@ -98,7 +95,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
                 currentPlayerCharacter = player.getCharQueue().pollLast();
                 player.setCurrentWord(word);
                 word.incrementProgress();
-                //System.out.println("currentPlayerCharacter: " + currentPlayerCharacter + " word: " + word);
             }
         }
 
@@ -107,7 +103,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
             if(currentWordCharacter == currentPlayerCharacter) {
                 player.getCurrentWord().incrementProgress();
                 currentPlayerCharacter = player.getCharQueue().pollLast();
-                System.out.println(currentPlayerCharacter);
             }else {
                 // add some sort of penalty for getting it wrong
                 currentPlayerCharacter = player.getCharQueue().pollLast();
