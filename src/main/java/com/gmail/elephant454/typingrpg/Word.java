@@ -3,6 +3,7 @@ package com.gmail.elephant454.typingrpg;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import java.awt.Color;
 
 public class Word {
@@ -29,6 +30,19 @@ public class Word {
     public Word(String text, int x, int y, Color color) {
         setX(x);
         setY(y);
+        setText(text);
+        setColor(color);
+    }
+    public Word(String text, int minX, int minY, int maxX, int maxY) {
+        Random random = new Random();
+        setX(random.nextInt(maxX-minX) + minX);
+        setY(random.nextInt(maxY) + minY);
+        setText(text);
+    }
+    public Word(String text, int minX, int minY, int maxX, int maxY, Color color) {
+        Random random = new Random();
+        setX(random.nextInt(maxX-minX) + minX);
+        setY(random.nextInt(maxY) + minY);
         setText(text);
         setColor(color);
     }

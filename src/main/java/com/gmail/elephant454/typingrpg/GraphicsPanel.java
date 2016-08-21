@@ -41,20 +41,21 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     public GraphicsPanel () {
         this.setSize(800, 600);
 
-        int usableHeight = this.getHeight() - firstWords.getWords().size()*fontSize;
-        int usableWidth = this.getWidth()/2;
-        createRandomWord(usableHeight, usableWidth, "boop");
-        createRandomWord(usableHeight, usableWidth, "kek");
-        createRandomWord(usableHeight, usableWidth, "idunno");
+        int minX = this.getWidth()/2;
+        int maxX = this.getWidth();
+        int minY = fontSize;
+        int maxY = this.getHeight() - fontSize;
+        new Word("boop", minX, minY, maxX, maxY, randomPalette.next()).addToParentWordList(firstWords);
+        new Word("kek", minX, minY, maxX, maxY, randomPalette.next()).addToParentWordList(firstWords);
+        new Word("idunno", minX, minY, maxX, maxY, randomPalette.next()).addToParentWordList(firstWords);
+        for(Word word : firstWords.getWords()) {
+            System.out.println(word.getText() + "(" + word.getX() + "," + word.getY() + ")");
+        }
 
         setFocusable(true);
         addKeyListener(this);
         this.requestFocusInWindow(true);
         (new Thread(this)).start();
-    }
-
-    public void createRandomWord(int usableHeight, int usableWidth, String text) {
-        new Word(text, (int) (Math.random()*this.getWidth()/2) + usableWidth, (int) Math.random()*usableHeight + fontSize, randomPalette.next()).addToParentWordList(firstWords);
     }
 
     @Override
