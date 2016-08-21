@@ -93,18 +93,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
         Iterator<Word> wordsIterator = firstWords.getWords().iterator();
         while(wordsIterator.hasNext()) {
             Word word = wordsIterator.next();
-            //System.out.println(player.getCurrentWord().getText() + " " + currentWordCharacter + " " + currentPlayerCharacter);
 
-            if(!word.isDefeated() && player.getCurrentWord().isDefeated() && currentPlayerCharacter == word.getNextChar()) {
+            if(!word.isDefeated() && player.getCurrentWord().isDefeated() && currentPlayerCharacter != null && currentPlayerCharacter == word.getNextChar()) {
                 currentPlayerCharacter = player.getCharQueue().pollLast();
                 player.setCurrentWord(word);
                 word.incrementProgress();
-                System.out.println("currentPlayerCharacter: " + currentPlayerCharacter + " word: " + word);
+                //System.out.println("currentPlayerCharacter: " + currentPlayerCharacter + " word: " + word);
             }
         }
-
-        //if(currentPlayerCharacter != null) System.out.println(currentPlayerCharacter);
-        //if(currentWordCharacter != null) System.out.println(currentWordCharacter);
 
         if(currentPlayerCharacter != null) {
             currentWordCharacter = player.getCurrentWord().getNextChar();
@@ -114,8 +110,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
                 System.out.println(currentPlayerCharacter);
             }else {
                 // add some sort of penalty for getting it wrong
-                //System.out.println(character + " " + player.getCurrentWord().getText());
-                //System.out.println(player.getCurrentWord().getText());
                 currentPlayerCharacter = player.getCharQueue().pollLast();
             }
         }
@@ -123,16 +117,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
 
     public void keyTyped(KeyEvent e){
         player.getCharQueue().addFirst(e.getKeyChar());
-        //System.out.println(player.getCharQueue());
-        //System.out.println(player.getCurrentWord().getText());
-        //System.out.println(player.getCharQueue());
-        //System.out.println(!charQueue.isEmpty());
-
-        //System.out.print("Size: " + words.size() + " Contents: ");
-        //for(Word word : words) {
-        //System.out.print(word.getText() + ", ");
-        //}
-        //System.out.println("");
     }
     public void keyPressed(KeyEvent e){}
     public void keyReleased(KeyEvent e){}
