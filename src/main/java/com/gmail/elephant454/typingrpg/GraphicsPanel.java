@@ -54,7 +54,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void createRandomWord(int usableHeight, int usableWidth, String text) {
-        new Word((int) (Math.random()*this.getWidth()/2) + usableWidth, (int) Math.random()*usableHeight + fontSize, text).addToParentWordList(firstWords);
+        new Word((int) (Math.random()*this.getWidth()/2) + usableWidth, (int) Math.random()*usableHeight + fontSize, text, randomPalette.next()).addToParentWordList(firstWords);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
 
         for(Word word : firstWords.getWords()) {
             if(!word.isDefeated()) {
-                g2.setPaint(randomPalette.next());
+                g2.setPaint(word.getColor());
                 g2.drawString(word.getText(), word.getX(), word.getY());
             }
         }

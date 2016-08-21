@@ -3,6 +3,7 @@ package com.gmail.elephant454.typingrpg;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.awt.Color;
 
 public class Word {
     private int x;
@@ -11,6 +12,8 @@ public class Word {
 
     private int progress = 0;
     private ArrayList<WordList> parentWordLists = new ArrayList<>();
+
+    private Color color;
 
     public Word() {
         setX(100);
@@ -22,6 +25,12 @@ public class Word {
         setX(x);
         setY(y);
         setText(text);
+    }
+    public Word(int x, int y, String text, Color color) {
+        setX(x);
+        setY(y);
+        setText(text);
+        setColor(color);
     }
 
     public void setX(int x) {
@@ -50,6 +59,13 @@ public class Word {
     }
     public void removeChar() {
         text = text.substring(1);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public int getProgress() {
