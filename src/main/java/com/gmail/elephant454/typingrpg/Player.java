@@ -33,7 +33,6 @@ public class Player {
     public void searchForNextWord(WordList wordList) {
         Character currentPlayerCharacter = charQueue.pollLast();
         if (currentPlayerCharacter != null) {
-            System.out.println(currentPlayerCharacter);
             Iterator<Word> wordsIterator = wordList.getWords().iterator();
             while(wordsIterator.hasNext()) {
                 Word word = wordsIterator.next();
@@ -51,13 +50,12 @@ public class Player {
     public void attackCurrentWord() {
 
         Character currentPlayerCharacter = charQueue.pollLast();
-        Character currentWordCharacter = currentWord.getNextChar();
         if(currentPlayerCharacter != null) {
+            Character currentWordCharacter = currentWord.getNextChar();
 
             currentWordCharacter = currentWord.getNextChar();
             if(currentWordCharacter == currentPlayerCharacter) {
                 currentWord.incrementProgress();
-                currentPlayerCharacter = charQueue.pollLast();
             }else {
                 // add some sort of penalty for getting it wrong
             }
