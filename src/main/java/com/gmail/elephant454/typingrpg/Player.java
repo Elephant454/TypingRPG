@@ -1,6 +1,7 @@
 package com.gmail.elephant454.typingrpg;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 
 public class Player {
     private ArrayDeque<Character> charQueue;
@@ -29,7 +30,37 @@ public class Player {
         this.charQueue = charQueue;
     }
 
-    public void doNextCharAttack() {
-        
+    public void searchForNextWord(WordList wordList) {
+        Character currentPlayerCharacter = charQueue.pollLast();
+        if (currentPlayerCharacter != null) {
+            System.out.println(currentPlayerCharacter);
+            Iterator<Word> wordsIterator = wordList.getWords().iterator();
+            while(wordsIterator.hasNext()) {
+                Word word = wordsIterator.next();
+
+                if(!word.isDefeated() && currentPlayerCharacter == word.getNextChar()) {
+                    if(charQueue.size() != 0) currentPlayerCharacter = charQueue.pollLast();
+                    else currentPlayerCharacter = 0;
+                    setCurrentWord(word);
+                    word.incrementProgress();
+                }
+            }
+        }
+    }
+
+    public void attackCurrentWord() {
+
+        Character currentPlayerCharacter = charQueue.pollLast();
+        Character currentWordCharacter = currentWord.getNextChar();
+        if(currentPlayerCharacter != null) {
+
+            currentWordCharacter = currentWord.getNextChar();
+            if(currentWordCharacter == currentPlayerCharacter) {
+                currentWord.incrementProgress();
+                currentPlayerCharacter = charQueue.pollLast();
+            }else {
+                // add some sort of penalty for getting it wrong
+            }
+        }
     }
 }

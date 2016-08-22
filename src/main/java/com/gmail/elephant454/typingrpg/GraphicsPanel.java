@@ -86,33 +86,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void gameLogic() {
-        Character currentPlayerCharacter = player.getCharQueue().pollLast();
-        Character currentWordCharacter = player.getCurrentWord().getNextChar();
-
-        if(currentPlayerCharacter != null) {
-            if(player.getCurrentWord().isDefeated()) {
-                Iterator<Word> wordsIterator = firstWords.getWords().iterator();
-                while(wordsIterator.hasNext()) {
-                    Word word = wordsIterator.next();
-
-                    if(!word.isDefeated() && currentPlayerCharacter == word.getNextChar()) {
-                        if(player.getCharQueue().size() != 0) currentPlayerCharacter = player.getCharQueue().pollLast();
-                        else currentPlayerCharacter = 0;
-                        player.setCurrentWord(word);
-                        word.incrementProgress();
-                    }
-                }
-            }
-
-            currentWordCharacter = player.getCurrentWord().getNextChar();
-            if(currentWordCharacter == currentPlayerCharacter) {
-                player.getCurrentWord().incrementProgress();
-                currentPlayerCharacter = player.getCharQueue().pollLast();
-            }else {
-                // add some sort of penalty for getting it wrong
-                currentPlayerCharacter = player.getCharQueue().pollLast();
-            }
-        }
+        if(player.getCurrentWord().isDefeated()) player.searchForNextWord(firstWords);
+        player.attackCurrentWord();
     }
 
     public void keyTyped(KeyEvent e){
