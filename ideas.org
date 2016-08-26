@@ -1,0 +1,32 @@
+* Gameplay Ideas
+** Sorting words as a gameplay mechanic?
+*** Potential Keybindings
+**** ~SPC v~ for vowels
+**** ~SPC s <letter>~ for words that begin with a given letter
+**** ~SPC e <letter>~ for words that end with a given letter
+*** Cooldown between switching letters
+*** It could get to the point where switching between sorting modes is just as important as typing words itself
+* PriorityQueue
+** Words sorted by x position?
+** Every collection of words can return...?
+* Progression of Powerups
+** In order
+*** Words are typed one at a time
+*** Player has no control over order
+*** After one word is done, the player goes to the next word
+** Sorted
+*** Player controls how the order of the words
+*** The player picks the order, but then has to type the words in that order until switching to some different order
+** Order doesn't matter
+*** currentWord is selected when the player types the first letter of a word
+*** the next word is selected in the same way
+** Letter order doesn't matter
+*** the player picks the next word just like before
+*** the order that the letters are typed doesn't matter
+*** typing giuaennas is valid for completing the word sanguine
+** Multiple words at once
+*** Every letter typed affects every word in the array
+*** If the words are soccer, sausage, sanguine, Scottish, and sentimental, typing "s" would remove the first s in all of these
+** Multiple words at once, order doesn't matter
+*** The order the letters are typed doesn't matter 
+*** the characters that are typed are cleared for all words in the current array

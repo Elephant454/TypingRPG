@@ -1,0 +1,26 @@
+(
+ :root-dir "/home/matthew/Documents/PersonalStuff/2015-2016/TypingRPG"
+ :cache-dir "/home/matthew/Documents/PersonalStuff/2015-2016/TypingRPG/.ensime_cache"
+ :scala-compiler-jars ("/home/matthew/.sbt/boot/scala-2.10.6/lib/scala-compiler.jar" "/home/matthew/.sbt/boot/scala-2.10.6/lib/scala-library.jar" "/home/matthew/.sbt/boot/scala-2.10.6/lib/scala-reflect.jar" "/home/matthew/.ivy2/cache/org.scala-lang/scalap/jars/scalap-2.10.6.jar")
+ :name "typingrpg"
+ :java-home "/usr/lib/jvm/java-8-openjdk"
+ :java-flags ("-Xss2m" "-Xms1024m" "-Xmx1024m" "-XX:ReservedCodeCacheSize=128m" "-XX:MaxMetaspaceSize=256m")
+ :java-compiler-args nil
+ :reference-source-roots ("/usr/lib/jvm/java-8-openjdk/src.zip")
+ :scala-version "2.10.6"
+ :compiler-args ("-feature" "-deprecation" "-Xlint" "-Yinline-warnings" "-Yno-adapted-args" "-Ywarn-dead-code" "-Ywarn-numeric-widen" "-Xfuture")
+ :formatting-prefs nil
+ :disable-source-monitoring nil
+ :disable-class-monitoring nil
+ :subprojects ((
+   :name "typingrpg"
+   :source-roots ("/home/matthew/Documents/PersonalStuff/2015-2016/TypingRPG/src/main/java")
+   :targets ("/home/matthew/Documents/PersonalStuff/2015-2016/TypingRPG/target/scala-2.10/classes")
+   :test-targets ("/home/matthew/Documents/PersonalStuff/2015-2016/TypingRPG/target/scala-2.10/test-classes")
+   :depends-on-modules nil
+   :compile-deps ("/home/matthew/.sbt/boot/scala-2.10.6/lib/scala-library.jar")
+   :runtime-deps nil
+   :test-deps nil
+   :doc-jars ("/home/matthew/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.6-javadoc.jar" "/home/matthew/Documents/PersonalStuff/2015-2016/TypingRPG/target/scala-2.10/typingrpg_2.10-0.1-SNAPSHOT-javadoc.jar")
+   :reference-source-roots ("/home/matthew/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar")))
+)
